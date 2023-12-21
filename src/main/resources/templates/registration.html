@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>TimeSheet</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}" />
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/js/register.js" th:src="@{/js/register.js}"></script>
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<a th:href="@{/logout}"><i class="fa fa-power-off" th:onClick="|return logout();|" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></a>
+</nav><br><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5><br><br>
+<form th:action="@{/addnewUser}" th:object="${user}" method="post">
+<div class="card"><br>
+<h1 align=center>Access Management</h1>
+<div class="card-body">
+<div class="row">
+<div class="col-md-4">
+<label for="name" class="col-form-label">UserName</label>
+<input type="text" th:field="*{name}" class="form-control" id="name" placeholder="UserName"> 
+</div>
+<div class="col-md-4">
+<label for="password" class="col-form-label">Password</label> 
+<input type="password" th:field="*{password}" class="form-control" id="password" placeholder="Password"> 
+</div>
+<div class=" col-md-4">
+<label for="email" class="col-form-label">Confirm Password</label> 
+<input type="password" th:field="*{confirmpass}" class="form-control" id="cp" placeholder="Confirm Password"> 
+</div>
+</div>
+<div class="row">
+<div class=" col-md-4">
+<label for="email" class="col-form-label">E-Mail</label> 
+<input type="email" th:field="*{email}" class="form-control" id="email" placeholder="E-Mail"> 
+</div>
+<div class=" col-md-4">
+<label for="email" class="col-form-label">Confirm E-Mail</label> 
+<input type="email" th:field="*{confirmemail}" class="form-control" id="ce" placeholder="Confirm E-Mail"> 
+</div>
+</div><br>
+<div class="row">
+<div class="form-group col-md-10">
+<button type="submit" class="btn btn-primary" th:onClick="|return registerValid()|">Register</button><br/><br/>
+</div>
+<div class="alert alert-danger"style="width:250px;color:green;font-weight:bold;" th:if="${errorMessage}">
+<div th:text="${errorMessage}">errorMessage</div>
+</div>
+</div>
+</div>
+</div>
+</form>
+</body>
+</html>
+

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8"/>
+<title>TimeSheet</title>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/clientlist.css}"/>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../static/js/timetracker.js" th:src="@{/js/timetracker.js}"></script>
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<a th:href="@{/logout}"><i class="fa fa-power-off" th:onClick="|return logout();|" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></a>
+</nav><br><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5><br><br>
+<div class="container bgimgadd"><br><br>
+<h2 style="padding-left: 40%;padding: right 50%;font-family: verdana"><b>TimeTracker List</b></h2><br>
+<div style="padding-left:80%;" >
+<input  id="myInput" type="text"  class="form-control" placeholder="Smart Search..">
+</div><br>
+<div style="overflow-x: scroll;overflow-y: scroll;max-height: 550px;max-height: 250px">
+<table class="table table-striped table-bordered container">
+<thead class="thead-dark">
+<tr>
+<th scope="col">ID</th>
+<th scope="col">Name</th>
+<th scope="col">Client Name</th>
+<th scope="col">Task Name</th>
+<th scope="col">Description</th>
+<th scope="col">Start Date</th>
+<th scope="col">End date</th>
+<th scope="col">Total Time(In Hrs)</th>
+<th scope="col">Employee Detail</th>
+<th scope="col">Update</th>
+<th scope="col">Delete</th>
+</tr>
+</thead>
+<tbody id="myTable">
+<tr class="table-success" th:each="product : ${timetracker1}">
+<td th:text="${product.timeid}"></td>
+<td th:text="${product.name}"></td>
+<td th:text="${product.clientname}"></td>
+<td th:text="${product.taskname}"></td>
+<td th:text="${product.description}"></td>
+<td th:text="${product.startdate}"></td>
+<td th:text="${product.enddate}"></td>
+<td th:text="${product.totaltime}"></td>
+<td th:text="${product.employeedetail}"></td>	
+<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" th:Onclick=" showpopuptime()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td> 
+<td><a th:href="${'/deletetimetracker/'+ {product.timeid}}"><button type="button" th:onClick="|return deleteClient();|" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></a> </td> 
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLongTitle">TimeTracker Edit Form</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<div class ="container">
+<form  th:action="@{/addTimeTracker}" th:object="${timetracker}" method="post">
+<input type="hidden" id="sedt">
+<input type="hidden" id="sdt">
+<input type="hidden" id="id"  class="form-control" th:field="*{timeid}" readonly>
+<div class="col-md-10">
+<label for="name" class="col-form-label">Project Name</label> 
+<select th:field="*{name}" class="form-control" id="name" th:onChange=(dateValidation())>
+<option value="" >Select Project</option> 
+<option th:each=" project : ${tony}" th:value="${project.projectname} " th:text="${project.projectname}"></option>
+</select>
+</div>
+<div class="col-md-10">
+<label for="client" class="col-form-label">Client Name</label> 
+<select th:field="*{clientname}" class="form-control" id="cname">
+<option value="Select Client" >Select Client</option> 
+<option th:each=" project : ${shiva}" th:value="${project.name} " th:text="${project.name}"></option>
+</select>
+</div>  
+<div class="col-md-10">
+<label for="taskname" class="col-form-label">Task Name</label> 
+<select th:field="*{taskname}" id="taskname" class="form-control" >
+<option value="" >Select Task</option> 
+<option th:each=" project : ${tho}" th:value="${project.name} " th:text="${project.name}"></option>
+</select>
+</div>
+<div class="col-md-10">
+<label for="description" class="col-form-label">Description</label> 
+<input type="text"  id="description" class="form-control" th:field="*{description}" placeholder="Description"/> 
+</div>
+<div class="col-md-10">
+<label for="startdate" class="col-form-label">Start Date</label>
+<input type="datetime-local" id="startdate" th:field="*{startdate}" class="form-control" />
+</div>	
+<div class="col-md-10">
+<label for="enddate" class="col-form-label">End Date</label>
+<input type="datetime-local" id="enddate" th:field="*{enddate}" class="form-control" />
+</div>
+<input type="hidden" th:field="*{totaltime}"  class="form-control" readonly="readonly" id="totaltime" placeholder="Total Time"/>
+<div class="col-md-10">
+<label for="employeedetails" class="col-form-label">Employee Details</label> 
+<select id="emplyeedetail"th:field="*{employeedetail}" class="form-control" >
+<option value="" >Select Employee</option> 
+<option th:each=" project : ${thanos}" th:value="${project.name} " th:text="${project.name}"></option>
+</select> 
+</div><br>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-primary">Save changes</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

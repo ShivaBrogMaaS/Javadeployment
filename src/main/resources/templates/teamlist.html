@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/clientlist.css}" />
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/js/team.js" th:src="@{/js/team.js}"></script>
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+<title>TimeSheet</title>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<a th:href="@{/logout}"><i class="fa fa-power-off" th:onClick="|return logout();|" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></a>
+</nav><br><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5><br><br>
+<div class="container bgimgadd"><br><br>
+<h2 style="padding-left: 40%;padding: right 50%;font-family: verdana"><b>Team List</b></h2><br>
+<div style="padding-left:80%;" >
+<input  id="myInput" type="text" class="form-control" placeholder="Smart Search..">
+</div><br>
+<div style="overflow-x: scroll;overflow-y: scroll;max-height: 550px;max-height: 350px">
+<table class="table table-striped table-bordered container">
+<thead class="thead-dark">
+<tr>
+<th scope="col">ID</th>
+<th scope="col">Name</th>
+<th scope="col">Phone</th>
+<th scope="col">E-Mail</th>
+<th scope="col">Gender</th>
+<th scope="col">Qualify</th>
+<th scope="col">Design</th>
+<th scope="col">Department</th>
+<th scope="col">Address</th>
+<th scope="col">Country</th>
+<th scope="col">State</th>
+<th scope="col">City</th>
+<th scope="col">Manager</th>
+<th scope="col">Skills</th>
+<th scope="col">Experience</th>
+<th scope="col">MHR</th>
+<th scope="col">ID Proof</th>
+<th scope="col">Update</th>
+<th scope="col">Delete</th>
+</tr>
+</thead>
+<tbody id="myTable">
+<tr class="table-success" th:each="siva : ${team1}">
+<td th:text="${siva.id}"></td>
+<td th:text="${siva.name}"></td>
+<td th:text="${siva.phone}"></td>
+<td th:text="${siva.email}"></td>
+<td th:text="${siva.gender}"></td>
+<td th:text="${siva.qualify}"></td>
+<td th:text="${siva.desig}"></td>
+<td th:text="${siva.address}"></td>
+<td th:text="${siva.department}"></td>
+<td th:text="${siva.country}"></td> 
+<td th:text="${siva.state}"></td>
+<td th:text="${siva.city}"></td>
+<td th:text="${siva.manager}"></td> 
+<td th:text="${siva.skills}"></td> 
+<td th:text="${siva.exp}"></td> 
+<td th:text="${siva.mhr}"></td> 
+<td th:text="${siva.idproof}"></td>
+<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" th:Onclick=" showpopupteam()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td> 
+<td><a th:href="${'/deleteteam/' + {siva.id}}"><button type="button" th:onClick="|return deleteClient();|" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></a> </td> 
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div style="background-color:orange" class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLongTitle">Team Edit Form</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<div  class ="container ">
+<form  th:action="@{/addTeam}" th:object="${team}" method="post">
+<input type="hidden" id="id"  class="form-control" th:field="*{id}" readonly>
+<div class="col-md-10">
+<label for="name" class="col-form-label">Employee Name</label> 
+<input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Employee Name"> 
+</div>
+<div class="col-md-10">
+<label for="phoneNo" class="col-form-label">Phone No</label> 
+<input type="number" th:field="*{phone}" class="form-control" id="phoneNo" placeholder="PhoneNo"> 
+</div>
+
+<div class="col-md-10">
+<label for="email" class="col-form-label">Employee Email</label> 
+<input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Employee Email"> 
+</div>
+
+<div class="col-md-10">
+<label for="gender" class="col-form-label">Gender</label> 
+<select th:field="*{gender}" class="form-control" id="gender">
+<option value="Select Gender">Select Gender</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+</select>
+</div>
+<div class="col-md-10">
+<label for="qualification" class="col-form-label">Qualification</label> 
+<select th:field="*{qualify}"id="qualification" class="form-control">
+<option value="">Select Qualification</option>
+<option value="Associate Degree">AssociateDegree</option>
+<option value="Bachelor'sDegree">BachelorsDegree</option>
+<option value="Master'sDegree">MastersDegree</option>
+<option value="Post Graduate">PostGraduate</option>
+</select> 
+</div>
+<div class="col-md-10">
+<label for="designation" class="col-form-label">Designation</label> 
+<select th:field="*{desig}" id="designation" class="form-control">
+<option value="">Select Designation</option>
+<option value="Trainee">Trainee</option>
+<option value="Developer">Developer</option>
+<option value="Tester">Tester</option>
+<option value="Support Engineer">Support Engineer</option>
+</select> 
+</div>
+
+<div class="col-md-10">
+<label for="address" class="col-form-label">Address</label> 
+<input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Address"> 
+</div>
+
+<div class="col-md-10">
+<label for="department" class="col-form-label">Department</label> 
+<select th:field="*{department}" id="department" class="form-control">
+<option value="">Select Department</option>
+<option value="Development">Development</option>
+<option value="Testing">Testing</option>
+<option value="Network Admin">Network Admin</option>
+<option value="Support">Support</option>
+</select> 
+</div>
+
+<div class="col-md-10">
+<label for="client" class="col-form-label">Country Name</label>
+<select  th:field="*{country}" name="country " class="countries form-control" id="countryId">
+<option value="Select Country">Select Country</option>
+</select>
+</div>
+<div class="col-md-10">
+<label for="client" class="col-form-label">State</label>
+<select th:field="*{state}" class="states form-control " id="stateId" >
+<option value="Select State">Select State</option>
+</select> 
+</div>
+<div class="col-md-10">
+<label for="client" class="col-form-label">City</label>
+<select th:field="*{city}" class="cities form-control" id="cityId">
+<option value="Select City">Select City</option>
+</select>
+</div>
+<div class="col-md-10">
+<label for="reportingManager" class="col-form-label">Reporting Manager</label> 
+<input type="text" th:field="*{manager}" class="form-control" id="reportingManager" placeholder="Reporting Manager"> 
+</div>
+<div class="col-md-10">
+<label for="skills" class="col-form-label">Skills</label> 
+<input type="text" th:field="*{skills}" class="form-control" id="skills" placeholder="Skills"> 
+</div>
+<div class="col-md-10">
+<label for="experience" class="col-form-label">Experience(Total)</label> 
+<input type="number" th:field="*{exp}" class="form-control" id="experience" placeholder="Experience"> 
+</div>					
+<div class="col-md-10">
+<label for="mhr" class="col-form-label">MHR</label> 
+<input type="text" th:field="*{mhr}" class="form-control" id="mhr" placeholder="MHR"> 
+</div>		
+<div class="col-md-10">
+<label for="idproof" class="col-form-label">Id Proof</label> 
+<input type="text" th:field="*{idproof}" class="form-control" id="idproof" placeholder="Id Proof"> 
+</div><br>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-primary">Save changes</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

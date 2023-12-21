@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../static/js/project.js" th:src="@{/js/project.js}"></script>
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+<title>TimeSheet</title>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<a th:href="@{/logout}"><i class="fa fa-power-off" th:onClick="|return logout();|" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></a>
+</nav><br><br><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5><br><br>
+<!-- ADD PROJECT -->
+<form  th:action="@{/addproject}" th:object="${project}" method="post">
+<div class="card" >
+<div class="card-body" >
+<h3 align=center>Add New Project</h3>
+<div class="row">
+<div class="col-md-3">
+<label for="name" class="col-form-label">Project Name</label> 
+<input type="text" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" th:field="*{projectname}" id="name" placeholder="Name"/> 
+</div>
+<div class="col-md-3">
+<label for="projectDesc" class="col-form-label">Project Description</label> 
+<input type="text"  class="form-control" onkeypress="return /[a-z]/i.test(event.key)"  th:field="*{projectdescription}" id="projectDesc" placeholder="Project Description"/> 
+</div>
+<div class="col-md-3">
+<label for="client" class="col-form-label">Client Name</label> 
+<select th:field="*{clientname}" class="form-control" id="cname" th:onChange=(poNumber())>
+<option value="">Select Client</option> 
+<option th:each=" project : ${shiva}" th:value="${project.name} " th:text="${project.name}"></option>
+</select>
+</div>  
+<div class="col-md-3">
+<label for="clientspoc" class="col-form-label">Client SPOC</label> 
+<input type="text" th:field="*{clientspoc}" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" id="clientspoc"  placeholder="Client SPOC" readonly/> 
+</div> 
+</div><br>
+<div class="row">
+<div class="col-md-3">
+<label for="internalspoc" class="col-form-label">Internal SPOC</label> 
+<input type="text"  th:field="*{internalspoc}" onkeypress="return /[a-z]/i.test(event.key)" class="form-control"id="internalspoc" placeholder="Internal SPOC"/>
+</div>
+<div class="col-md-3">
+<label for="ponum" class="col-form-label">PO Number</label> 
+<input type="number" th:field="*{ponumber}" class="form-control" id="ponum" placeholder="PO Number" readonly/> 
+</div>
+<div class="col-md-3">
+<label for="noofemployee" class="col-form-label">No. of Employee</label> 
+<input type="number"  th:field="*{noofemployee}" class="form-control"id="noofemployee" placeholder="No. of Employee"/> 
+</div> 
+<div class="col-md-3">
+<label for="access" class="col-form-label">Project Manager</label> 
+<input type="text" th:field="*{projectmanager}" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" id="Access" placeholder="Project Manager"/> 
+</div>
+</div><br>
+<div class="row">
+<div class="col-md-3">
+<label for="projectstartDate" class="col-form-label">Project Start Date</label> 
+<input type="date"  th:field="*{startdate}" class="form-control"id="projectstartDate" placeholder="Project Start Date"/> 
+</div>
+<div class="col-md-3">
+<label for="projectExpEndDate" class="col-form-label">Project Exp End Date</label> 
+<input type="date"  th:field="*{enddate}" class="form-control"id="projectExpEndDate" placeholder="Project Expected End Date"/> 
+</div>
+<div class="col-md-3">
+<label for="teamname" class="col-form-label">Team Name</label>  
+<select th:field="*{teamname}" class="form-control" id="teamname">
+<option value="Select Team" >Select Team Name</option> 
+<option th:each=" project : ${shiva1}" th:value="${project.name} " th:text="${project.name}"></option>
+</select>
+</div>
+</div>
+</div><br>
+<div class="col-md-4">
+<input type="submit" class="btn btn-primary" value="Add Project" th:onclick="| return projectValid()|">
+</div><br>
+</div>
+</form>
+</body>
+</html>

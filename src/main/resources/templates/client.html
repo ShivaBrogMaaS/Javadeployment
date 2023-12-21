@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>TimeSheet</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}" />
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+<script type="text/javascript" src="../static/js/client.js" th:src="@{/js/client.js}"></script>
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<a th:href="@{/logout}"><button type="button" th:onClick="|return logout();|" class="btn btn-link"><i class="fa fa-power-off" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></button></a>
+</nav><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5><br><br>
+<div class="card"><br>
+<form action="#" th:action="@{/addclient}" th:object="${client}" method="post">
+<h3 align=center> Add New Client</h3>
+<div class="card-body">
+<div class="row">
+<div class="col-md-3">
+<label for="name" class="col-form-label">Client Name</label>
+<input type="text" th:field="*{name}" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" id="name" placeholder="Name"> 
+</div>
+<div class=" col-md-3">
+<label for="email" class="col-form-label">Email</label> 
+<input type="email" th:field="*{email}" class="form-control" id="email" placeholder="email"> 
+</div>
+<div class="col-md-3">
+<label for="contactno" class="col-form-label">Contact No</label> 
+<input type="number" th:field="*{contactno}" class="form-control" id="contactno" placeholder="Contact No"> 
+</div>
+<div class="col-md-3">
+<label for="ponum" class="col-form-label">PO No</label> 
+<input type="number" th:field="*{ponumber}" class="form-control" id="ponum" placeholder="PO Number"> 
+</div>
+</div><br>
+<div class="row">
+<div class="col-md-3">
+<label for="poamount" class="col-form-label">PO Amount</label> 
+<input type="number" th:field="*{poamount}" class="form-control" id="poamount" placeholder="PO Amount"> 
+</div>
+<div class=" col-md-3">
+<label for="jobtitle" class="col-form-label">Job Title</label> 
+<input type="text" th:field="*{jobtitle}" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" id="jobtitle" placeholder="Job Title"> 
+</div>
+<div class="col-md-3">
+<label for="spoc" class="col-form-label">SPOC</label> 
+<input type="text" th:field="*{spoc}" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" id="spoc" placeholder="SPOC"> 
+</div>
+<div class="col-md-3">
+<label for="address" class="col-form-label">Address</label> 
+<input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Address"> 
+</div>
+</div><br>
+<div class="row">
+<div class="col-md-3">
+<label for="country" class="col-form-label">Country Name</label>
+<select  th:field="*{country}" name="country " class="countries form-control" id="countryId">
+<option value="Select Country">Select Country</option>
+</select>
+</div>
+<div class="col-md-3">
+<label for="State" class="col-form-label">State</label>
+<select th:field="*{state}" class="states form-control " id="stateId" >
+<option value="Select State">Select State</option>
+</select> 
+</div>
+<div class=" col-md-3">
+<label for="city" class="col-form-label">City</label>
+<select th:field="*{city}" class="cities form-control" id="cityId">
+<option value="Select City">Select City</option>
+</select>
+</div>
+<div class="col-md-3">
+<label for="pincode" class="col-form-label">PinCode</label> 
+<input type="number" th:field="*{pincode}" class="form-control" id="pincode" placeholder="PinCode"> 
+</div>
+</div><br>
+<div class="row">
+<div class="col-md-3">
+<label for="cintinno" class="col-form-label">CIN/TIN No</label> 
+<input type="number" th:field="*{tinno}" class="form-control" id="cintinno" placeholder="CIN/TIN No"> 
+</div><br>
+<div class="col-md-3">
+<label style="display:none;" class="col-form-label"></label><br> 
+<input type="submit" class="btn btn-primary" value="Add Client" th:onClick="| return clientValid()|">
+</div>
+</div>
+</div>
+</form>
+</div>
+</body>
+</html>

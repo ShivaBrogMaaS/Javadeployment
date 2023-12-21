@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}" />
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../static/js/project.js" th:src="@{/js/project.js}"></script>
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+<title>TimeSheet</title>
+</head>
+<body>	
+<label for="client" class="col-form-label">Country Name</label>
+<select   name="country " class=" form-control" th:onChange="statePop()" id="countryId">
+<option>Select Country</option>
+<option th:each="product : ${shiva}"th:value= "${product.name}" th:text="${product.name}">Select Country</option>
+</select>
+
+<label for="client" class="col-form-label">State</label>
+<select  class=" form-control " th:onChange="getCity()" id="state1Id"  >
+<option>Select State</option>
+</select> 
+
+<label for="client" class="col-form-label">City</label>
+<select  class=" form-control" id="cityId">
+<option>Select City</option>
+</select>
+</body>
+</html>

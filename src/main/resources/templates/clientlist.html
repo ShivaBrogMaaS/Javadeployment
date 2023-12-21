@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>TimeSheet</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/clientlist.css}" />
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+<script type="text/javascript" src="../static/js/client.js" th:src="@{/js/client.js}"></script>
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<a th:href="@{/logout}"><i class="fa fa-power-off" th:onClick="|return logout();|" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></a>
+</nav><br><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5>
+<br><br>
+<div class="container bgimgadd"><br><br>
+<h2 style="padding-left: 40%;padding: right 50%;font-family: verdana"><b>Client List</b></h2><br>
+<div style="padding-left:80%;" >
+<input  id="myInput" type="text"  class="form-control"  placeholder="Smart Search..">
+</div><br>
+<div style="overflow-x: scroll;overflow-y: scroll;max-height: 550px;max-height: 350px">
+<table class = "table table-bordered">
+<thead class="bg-primary">
+<tr>
+<th scope="col">ID</th>
+<th scope="col">Client Name</th>
+<th scope="col">E-Mail</th>
+<th scope="col">ContactNumber</th>
+<th scope="col">PO Number</th>
+<th scope="col">PO Amount</th>
+<th scope="col">Job Title</th>
+<th scope="col">SPOC</th>
+<th scope="col">Address</th>
+<th scope="col">Country</th>
+<th scope="col">State</th>
+<th scope="col">City</th>
+<th scope="col">Pin Code</th>
+<th scope="col">CIN/TIN Number</th>
+<th scope="col">Update</th>
+<th scope="col">Delete</th>
+</tr>
+</thead>
+<tbody id="myTable" style="background-color: black">
+<tr class="table-success" th:each="product : ${client}">
+<td th:text="${product.id}"></td>
+<td th:text="${product.name}"></td>
+<td th:text="${product.email}"></td>
+<td th:text="${product.contactno}"></td>
+<td th:text="${product.ponumber}"></td>
+<td th:text="${product.poamount}"></td>
+<td th:text="${product.jobtitle}"></td>
+<td th:text="${product.spoc}"></td>
+<td th:text="${product.address}"></td>
+<td th:text="${product.country}"></td>
+<td th:text="${product.state}"></td>
+<td th:text="${product.city}"></td>
+<td th:text="${product.pincode}"></td>
+<td th:text="${product.tinno}"></td>
+<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong" th:Onclick=" showpopup()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td> 
+<td><a th:href="${'/delete/' + {product.id}}"><button type="button" th:onClick="|return deleteClient();|" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button></a> </td> 
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- <!-- The Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLongTitle">Client Edit Form</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+<div class ="">
+<form action="#" th:action="@{/addclient}" th:object="${shiva}" method="post">
+<div class="col-md-10">
+<label for="name" class="col-form-label">Client Id</label>
+<input type="number" id="id"  class="form-control" th:field="*{id}" readonly>
+</div>
+<div class="col-md-10">
+<label for="name" class="col-form-label">Client Name</label>
+<input type="text" th:field="*{name}" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" id="name" placeholder="Name"> 
+</div>
+<div class=" col-md-10">
+<label for="email" class="col-form-label">Email</label> 
+<input type="email" th:field="*{email}" class="form-control" id="email" placeholder="email"> 
+</div>
+<div class="col-md-10">
+<label for="contactno" class="col-form-label">Contact No</label> 
+<input type="number" th:field="*{contactno}" class="form-control" id="contactno" placeholder="Contact No"> 
+</div>
+<div class="col-md-10">
+<label for="ponum" class="col-form-label">PO No</label> 
+<input type="number" th:field="*{ponumber}" class="form-control" id="ponum" placeholder="PO Number"> 
+</div>
+<div class="col-md-10">
+<label for="poamount" class="col-form-label">PO Amount</label> 
+<input type="number" th:field="*{poamount}" class="form-control" id="poamount" placeholder="PO Amount"> 
+</div>
+<div class=" col-md-10">
+<label for="jobtitle" class="col-form-label">Job Title</label> 
+<input type="text" th:field="*{jobtitle}" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" id="jobtitle" placeholder="Job Title"> 
+</div>
+<div class="col-md-10">
+<label for="spoc" class="col-form-label">SPOC</label> 
+<input type="text" th:field="*{spoc}" onkeypress="return /[a-z]/i.test(event.key)" class="form-control" id="spoc" placeholder="SPOC"> 
+</div>
+<div class="col-md-10">
+<label for="address" class="col-form-label">Address</label> 
+<input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Address"> 
+</div>
+<div class="col-md-10">
+<label for="country" class="col-form-label">Country Name</label>
+<select  th:field="*{country}" name="country " class="countries form-control" id="countryId">
+<option value="Select Country">Select Country</option>
+</select>
+</div>
+<div class="col-md-10">
+<label for="State" class="col-form-label">State</label>
+<select th:field="*{state}" class="states form-control " id="stateId" >
+<option value="Select State">Select State</option>
+</select> 
+</div>
+<div class=" col-md-10">
+<label for="city" class="col-form-label">City</label>
+<select th:field="*{city}" class="cities form-control" id="cityId">
+<option value="Select City">Select City</option>
+</select>
+</div>
+<div class="col-md-10">
+<label for="pincode" class="col-form-label">PinCode</label> 
+<input type="number" th:field="*{pincode}" class="form-control" id="pincode" placeholder="PinCode"> 
+</div>
+<div class="col-md-10">
+<label for="cintinno" class="col-form-label">CIN/TIN No</label> 
+<input type="number" th:field="*{tinno}" class="form-control" id="cintinno" placeholder="CIN/TIN No"> 
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-primary">Save changes</button>
+ </div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+

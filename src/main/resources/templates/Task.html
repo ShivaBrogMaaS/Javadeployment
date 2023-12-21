@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../static/js/task.js" th:src="@{/js/task.js}"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}" />
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+<title>TimeSheet</title>
+</head>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<a th:href="@{/logout}"><i class="fa fa-power-off" th:onClick="|return logout();|" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></a>
+</nav><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5><br><br>
+<form th:action="@{/addTask}" th:object="${task}" method="post">
+<div class="card"><br>
+<h3 align=center> Add New Task</h3>
+<div class="card-body">
+<div class="row">
+<div class="col-md-3">
+<label for="name" class="col-form-label"> Task Name</label>
+<input type="text" id="name" class="form-control" onkeypress="return /[a-z]/i.test(event.key)" placeholder=" Task Name" th:field="*{name}"> 
+</div>
+<div class=" col-md-3">
+<label for="projectname" class="col-form-label">Project Name</label> 
+<select th:field="*{projectname}" class="form-control" id="projectname" >
+<option value="">Select Project</option> 
+<option th:each=" sachin : ${proname}" th:value="${sachin.projectname} " th:text="${sachin.projectname}"></option>
+</select> 
+</div>
+<div class="col-md-3">
+<label for="client" class="col-form-label">Client Name</label> 
+<select th:field="*{clientname}" class="form-control" id="cname">
+<option value="" >Select Client</option> 
+<option th:each=" project : ${shiva}" th:value="${project.name} " th:text="${project.name}"></option>
+</select>
+</div>
+<div class="col-md-3">
+<label for="taskowner" class="col-form-label">Task Owner</label> 
+<select th:field="*{taskowner}" class="form-control" id="taskowner" th:onChange=(autoPop())>
+<option  value="" >Select TaskOwner</option> 
+<option th:each=" project : ${indhu}" th:value="${project.name} " th:text="${project.name}"></option>
+</select>
+</div>
+<div class="col-md-3">
+<label for="contactno" class="col-form-label">Contact Number</label> 
+<input type="number"  class="form-control" id="contactno" readonly placeholder="Contact Number" th:field="*{contactno}"> 
+</div>
+<div class="col-md-3">
+<label for="email" class="col-form-label">E-Mail</label> 
+<input type="email"  class="form-control" id="email" placeholder="E-Mail" readonly th:field="*{email}"> 
+</div>
+</div><br>
+<div class="col-md-10">
+<input type="submit" class="btn btn-primary" value="Add Task" th:onclick="| return taskValid()|">
+</div>
+</div>
+</div>
+</form>
+</body>
+</html>

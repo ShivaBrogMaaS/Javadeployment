@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<title>TimeSheet</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+<script src="//geodata.solutions/includes/countrystatecity.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}" />
+<script type="text/javascript" src="../static/js/team.js" th:src="@{/js/team.js}"></script>
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<a th:href="@{/logout}"><i class="fa fa-power-off" th:onClick="|return logout();|" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></a>
+</nav><br><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5><br><br>
+<form  th:action="@{/addTeam}" th:object="${team}" method="post">
+<div class="card">
+<div class="card-body">
+<h3 align=center> Add New Member</h3>
+<div class="row">
+<div class="col-md-3">
+<label for="name" class="col-form-label">Employee Name</label> 
+<input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Employee Name"> 
+</div>
+<div class="col-md-3">
+<label for="email" class="col-form-label">Employee Email</label> 
+<input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Employee Email"> 
+</div>
+<div class="col-md-3">
+<label for="phoneNo" class="col-form-label">Phone No</label> 
+<input type="number" th:field="*{phone}" class="form-control" id="phoneNo" placeholder="PhoneNo"> 
+</div>
+<div class="col-md-3">
+<label for="gender" class="col-form-label">Gender</label> 
+<select th:field="*{gender}" class="form-control" id="gender">
+<option value="Select Gender">Select Gender</option>
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+</select>
+</div>
+</div>
+<div class="row">
+<div class="col-md-3">
+<label for="qualification" class="col-form-label">Qualification</label> 
+<select th:field="*{qualify}"id="qualification" class="form-control">
+<option value="">Select Qualification</option>
+<option value="Associate Degree">AssociateDegree</option>
+<option value="Bachelor'sDegree">BachelorsDegree</option>
+<option value="Master'sDegree">MastersDegree</option>
+<option value="Post Graduate">PostGraduate</option>
+</select> 
+</div>
+<div class="col-md-3">
+<label for="designation" class="col-form-label">Designation</label> 
+<select th:field="*{desig}" id="designation" class="form-control">
+<option value="">Select Designation</option>
+<option value="Trainee">Trainee</option>
+<option value="Developer">Developer</option>
+<option value="Tester">Tester</option>
+<option value="Support Engineer">Support Engineer</option>
+</select> 
+</div>
+<div class="col-md-3">
+<label for="department" class="col-form-label">Department</label> 
+<select th:field="*{department}" id="department" class="form-control">
+<option value="">Select Department</option>
+<option value="Development">Development</option>
+<option value="Testing">Testing</option>
+<option value="Network Admin">Network Admin</option>
+<option value="Support">Support</option>
+</select> 
+</div>
+<div class="col-md-3">
+<label for="address" class="col-form-label">Address</label> 
+<input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Address"> 
+</div>
+</div>
+<div class="row">
+<div class="col-md-3">
+<label for="client" class="col-form-label">Country Name</label>
+<select  th:field="*{country}" name="country " class="countries form-control" id="countryId">
+<option value="Select Country">Select Country</option>
+</select>
+</div>
+<div class="col-md-3">
+<label for="client" class="col-form-label">State</label>
+<select th:field="*{state}" class="states form-control " id="stateId" >
+<option value="Select State">Select State</option>
+</select> 
+</div>
+<div class="col-md-3">
+<label for="client" class="col-form-label">City</label>
+<select th:field="*{city}" class="cities form-control" id="cityId">
+<option value="Select City">Select City</option>
+</select>
+</div>
+<div class="col-md-3">
+<label for="reportingManager" class="col-form-label">Reporting Manager</label> 
+<input type="text" th:field="*{manager}" class="form-control" id="reportingManager" placeholder="Reporting Manager"> 
+</div>
+</div>
+<div class="row">
+<div class="col-md-3">
+<label for="skills" class="col-form-label">Skills</label> 
+<input type="text" th:field="*{skills}" class="form-control" id="skills" placeholder="Skills"> 
+</div>
+<div class="col-md-3">
+<label for="experience" class="col-form-label">Experience(Total)</label> 
+<input type="number" th:field="*{exp}" class="form-control" id="experience" placeholder="Experience"> 
+</div>					
+<div class="col-md-3">
+<label for="mhr" class="col-form-label">MHR</label> 
+<input type="text" th:field="*{mhr}" class="form-control" id="mhr" placeholder="MHR"> 
+</div>		
+<div class="col-md-3">
+<label for="idproof" class="col-form-label">Id Proof</label> 
+<input type="text" th:field="*{idproof}" class="form-control" id="idproof" placeholder="Id Proof"> 
+</div>
+</div><br>
+<div class="col-md-8">
+<input type="submit" class="btn btn-primary" value="Add Member" th:OnClick="| return teamValid()|">
+</div>
+</div>
+</div><br>
+</form>
+</body>
+</html>

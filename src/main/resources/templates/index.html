@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" ></script>
+<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+<script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}" />
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+<title>TimeSheet</title>
+</head>
+<body>
+<nav class="navbar fixed-top navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<h3 style="color:white" align="center"> TIMESHEET HOMEPAGE</h3>
+<a th:href="@{/login}"><i class="fa fa-power-off" th:onClick="|return logout();|" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></a>
+</nav><br><br><br><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5>
+<div class="card">
+<div class="card-body">
+<div class="tiles-grid">
+<a th:href="@{/newProject}"  data-role="tile" style="background-color: Maroon"   data-size="large"  class="col-1 row-1">
+<img src="img/pro.png" class="icon">
+<span class="branding-bar">New Project</span>
+</a> 
+<a th:href="@{/newTask}" data-role="tile"  data-size="medium">
+<img src="img/task.png" class="icon">
+<span class="branding-bar">New Task</span>
+</a> 
+<a th:href="@{/newTimeTracker}" data-role="tile" data-size="medium">
+<img src="img/timetracker.png" class="icon">
+<span class="branding-bar"> New TimeTracker</span>
+</a>
+<a th:href="@{/newclient}" data-role="tile" data-size="medium">
+<img src="img/client.png" class="icon">
+<span class="branding-bar">New Client</span>
+</a>
+<a th:href="@{/TeamList}" data-role="tile" data-size="medium" class="col-11 row-3">
+<img src="img/teamlist.png" class="icon">
+<span class="branding-bar">Team List</span>
+</a>
+<a th:href="@{/TimeTrackerList}" data-role="tile" data-size="medium" class="col-5 row-5" >
+<img src="img/timetracker.png" class="icon">
+<span class="branding-bar">TimeTracker List</span>
+</a>
+<a th:href="@{/ClientList}"  data-role="tile" data-size="medium" class="col-7 row-3">
+<img src="img/clientlist.png" class="icon">
+<span class="branding-bar">Client List</span>
+ </a>
+<a th:href="@{/ProjectList}"  data-role="tile" data-size="medium" class="col-1 row-5">
+<img src="img/projectlist.jpg" class="icon">
+<span class="branding-bar">Project List</span>
+</a>
+<a th:href="@{/GroupList}"  data-role="tile" data-size="medium" class="col-3 row-5">
+<img src="img/projectlist.jpg" class="icon">
+<span class="branding-bar">Group List</span>
+</a>
+<a th:href="@{/TaskList}" data-role="tile" data-size="medium" class="col-9 row-3">
+<img src="img/tasklist.jpg" class="icon">
+<span class="branding-bar">Task List</span>
+</a>
+<a th:href="@{/newMemb}" data-role="tile" data-size="medium" class="col-11 row-1">
+<img src="img/group.jpg" class="icon">
+<span class="branding-bar">New Group</span>
+</a>
+<a  th:href="@{/registration}" data-role="tile" data-size="wide" class="col-9 row-5">
+<img src="img/teamlist.png" class="icon">
+<span class="branding-bar">Access Management</span>
+</a>
+<a  th:href="@{/changepass}" data-role="tile" data-size="medium" class="col-7 row-5">
+<img src="img/cp.jpg" class="icon">
+<span class="branding-bar">ChangePassword</span>
+</a>
+<a  th:href="@{/newTeam}" data-role="tile" data-size="medium" class="col-5 row-3">
+<img src="img/group.jpg" class="icon">
+<span class="branding-bar">New Team</span>
+</a>
+</div>
+</div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

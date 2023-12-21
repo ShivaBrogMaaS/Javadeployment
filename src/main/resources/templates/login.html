@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" type="text/css"th:href="@{/css/contact.css}" />
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<title>TimeSheet</title>
+</head>
+<body>
+
+<!-- <img align=left style="width:100px;"th:src="@{/img/tvs.png}"> -->
+<div  class="login-box">
+<img th:src="@{/img/login.png}" class="logo"/>
+<form th:action="@{/login}" method="post"><br/><br/><br/><br/>
+<h2 align=center>TimeSheet Login</h2><br><br>
+<div class="alert alert-danger"style="width:250px;color:red;font-weight:bold;" th:if="${errorMessage}">
+<div th:text="${errorMessage}">errorMessage</div>
+</div>
+<div th:if="${param.error}">
+<div class="alert alert-danger"style="width:250px;color:red;font-weight:bold;">Invalid UserName or password.</div></div>
+<div th:if="${param.logout}"><div class="alert alert-info" style="width:250px;color:blue;font-weight:bold;">You have been logged out.</div></div><br/>		
+<p>UserName</p>
+<input type="text" id="username" name="username" placeholder="Enter Username" autofocus="autofocus">
+<p>Password</p>
+<input type="password" id="password" name="password" placeholder="Enter Password" autofocus="autofocus">
+<input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-primary" value="Log In">
+<a style="float:center;"th:href="@{/newPass}">ForgotPassword?</a> 
+</form>
+</div>
+</body>
+</html>

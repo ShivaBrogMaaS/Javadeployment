@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8"/>
+<title>TimeSheet</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" th:href="@{/img/spring.png}"/>
+<link rel="stylesheet" type="text/css" th:href="@{/css/nav.css}"/>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="../static/js/timetracker.js" th:src="@{/js/timetracker.js}"></script>
+<script type="text/javascript" src="../static/js/logout.js" th:src="@{/js/logout.js}"></script>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+<a class="navbar-brand" th:href="@{/newhome}"><i class="fa fa-home" style="font-size:32px;color:blue"></i></a>
+<a th:href="@{/logout}"><i class="fa fa-power-off" th:onClick="|return logout();|" sec:authorize="isAuthenticated()" style="font-size:24px;color:red"></i></a>
+</nav><br><br><h5 style="color:white;float:right;">Welcome:<span sec:authentication="name" style="color:white;float:right;"></span></h5><br><br>
+<form  th:action="@{/addTimeTracker}" th:object="${timetracker}" method="post">
+<div class="card"><br>
+<h3 align=center> Add Time Tracker</h3>
+<div class="card-body">
+<div class="row">
+<input type="hidden" id="sedt">
+<input type="hidden" id="sdt">
+<div class="col-md-3">
+<label for="name" class="col-form-label">Project Name</label> 
+<select th:field="*{name}" class="form-control" id="name" th:onChange=(dateValidation())>
+<option value="" >Select Project</option> 
+<option th:each=" project : ${tony}" th:value="${project.projectname} " th:text="${project.projectname}"></option>
+</select>
+</div>
+<div class="col-md-3">
+<label for="client" class="col-form-label">Client Name</label> 
+<select th:field="*{clientname}" class="form-control" id="cname">
+<option value="Select Client" >Select Client</option> 
+<option th:each=" project : ${shiva}" th:value="${project.name} " th:text="${project.name}"></option>
+</select>
+</div>  
+<div class="col-md-3">
+<label for="taskname" class="col-form-label">Task Name</label> 
+<select th:field="*{taskname}" id="taskname" class="form-control" >
+<option value="" >Select Task</option> 
+<option th:each=" project : ${tho}" th:value="${project.name} " th:text="${project.name}"></option>
+</select>
+</div>
+<div class="col-md-3">
+<label for="description" class="col-form-label">Description</label> 
+<input type="text"  id="description" class="form-control" th:field="*{description}" placeholder="Description"/> 
+</div>
+</div><br>
+<div class="row">
+<div class="col-md-3">
+<label for="startdate" class="col-form-label">Start Date</label>
+<input type="datetime-local" id="startdate" th:field="*{startdate}" class="form-control" />
+</div>	
+<div class="col-md-3">
+<label for="enddate" class="col-form-label">End Date</label>
+<input type="datetime-local" id="enddate" th:field="*{enddate}" class="form-control" />
+</div>
+<input type="hidden" th:field="*{totaltime}"  class="form-control" readonly="readonly" id="totaltime" placeholder="Total Time"/>
+<div class="col-md-3">
+<label for="employeedetails" class="col-form-label">Employee Details</label> 
+<select id="emplyeedetail"th:field="*{employeedetail}" class="form-control" >
+<option value="" >Select Employee</option> 
+<option th:each=" project : ${thanos}" th:value="${project.name} " th:text="${project.name}"></option>
+</select> 
+</div>
+</div><br><br>
+<div class="col-md-10">
+<input type="submit" class="btn btn-primary" value="Add Time Tracker" th:onClick="| return timetrackerValid()|">
+</div>
+</div>
+</div>
+</form>
+</body>
+</html>
